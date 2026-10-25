@@ -1,0 +1,49 @@
+{
+  "name": "buildbond",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Milestone-based proof-of-work and payment tracking for high-value physical projects. Capstone project.",
+  "keywords": [
+    "capstone",
+    "milestones",
+    "escrow-simulation",
+    "react",
+    "express",
+    "postgresql"
+  ],
+  "scripts": {
+    "setup": "npm install && npm --prefix server install && npm --prefix web install",
+
+    "db:reset": "node server/db/reset.mjs",
+    "db:seed": "node server/db/seed.mjs",
+    "db:setup": "npm run db:reset && npm run db:seed",
+
+    "dev:server": "npm --prefix server run dev",
+    "dev:web": "npm --prefix web run dev",
+    "dev": "concurrently -n server,web -c blue,green \"npm:dev:server\" \"npm:dev:web\"",
+
+    "build:web": "npm --prefix web run build",
+    "start": "npm --prefix server start",
+
+    "smoke": "node scripts/smoke.mjs",
+    "verify": "node scripts/verify.mjs",
+
+    "test": "npm run verify"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakshamkachhawaha/BuildBond.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sakshamkachhawaha/BuildBond/issues"
+  },
+  "homepage": "https://github.com/sakshamkachhawaha/BuildBond#readme"
+}

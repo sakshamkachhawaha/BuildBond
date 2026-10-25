@@ -570,3 +570,8 @@ We want to be upfront about what this MVP is and is not:
 **Institution:** Newton School of Technology
 
 
+## 📄 License
+ 
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+ 
+---
