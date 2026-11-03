@@ -8,33 +8,70 @@ import NewProject from './pages/NewProject.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
 import Register from './pages/Register.jsx';
 
+/*
+  Palette
+  navy      #0b1b3a  (brand, footer, 404 badge)
+  amber     #fbbf24  (accent, primary action, hazard stripe)
+  charcoal  #1f2933  (body text, hazard stripe)
+  canvas    #f4f5f7  (page background)
+*/
+
+// Blueprint grid shown faintly behind every page.
+const BLUEPRINT_GRID = {
+  backgroundImage:
+    'linear-gradient(to right, rgba(11,27,58,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(11,27,58,0.05) 1px, transparent 1px)',
+  backgroundSize: '44px 44px',
+  WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)',
+  maskImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)',
+};
+
+// Safety-tape stripe used on the 404 card.
+const HAZARD_STRIPES = {
+  backgroundImage:
+    'repeating-linear-gradient(-45deg, #fbbf24, #fbbf24 14px, #1f2933 14px, #1f2933 28px)',
+};
+
 function NotFound() {
   return (
     <div className="flex min-h-[65vh] items-center justify-center px-4">
-      <div className="w-full max-w-lg rounded-[2rem] border border-slate-200/80 bg-white p-8 text-center shadow-xl shadow-slate-200/40 sm:p-12">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-3xl font-bold text-blue-600">
-          404
+      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-[#0b1b3a]/10">
+        <div className="h-3 w-full" style={HAZARD_STRIPES} aria-hidden="true" />
+
+        <div className="px-8 pb-12 pt-10 text-center sm:px-12">
+          <div
+            className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-[#0b1b3a] text-3xl font-extrabold tracking-tight text-amber-400 shadow-lg shadow-[#0b1b3a]/30 ring-4 ring-amber-400/30"
+            aria-hidden="true"
+          >
+            404
+          </div>
+
+          <h2 className="text-3xl font-extrabold tracking-tight text-[#0b1b3a] sm:text-4xl">
+            This page isn&apos;t on the plan
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-sm text-base leading-7 text-slate-600">
+            The page you&apos;re looking for doesn&apos;t exist or may have been moved.
+          </p>
+
+          <Link
+            className="group mt-9 inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-bold text-[#0b1b3a] shadow-lg shadow-amber-400/30 transition duration-200 hover:bg-amber-300 hover:shadow-amber-400/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0b1b3a] focus-visible:ring-offset-2 motion-reduce:transition-none"
+            to="/"
+          >
+            Back to dashboard
+            <svg
+              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 10h12m0 0-5-5m5 5-5 5" />
+            </svg>
+          </Link>
         </div>
-
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
-          Page not found
-        </p>
-
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-          Lost your way?
-        </h2>
-
-        <p className="mt-3 text-sm leading-6 text-slate-500">
-          The page you're looking for doesn't exist or may have been moved.
-        </p>
-
-        <Link
-          className="mt-8 inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-blue-600/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          to="/"
-        >
-          Back to dashboard
-          <span className="ml-2">→</span>
-        </Link>
       </div>
     </div>
   );
@@ -43,17 +80,28 @@ function NotFound() {
 
 export default function App() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-[#f7f9fc] text-slate-800 antialiased">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-[#f4f5f7] text-[#1f2933] antialiased selection:bg-amber-200 selection:text-[#0b1b3a]">
+      <a
+        href="#main-content"
+        className="sr-only rounded-lg bg-[#0b1b3a] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:outline-none focus:ring-2 focus:ring-amber-400"
+      >
+        Skip to content
+      </a>
+
       <div className="pointer-events-none fixed inset-0 -z-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-blue-200/20 blur-3xl" />
-        <div className="absolute -bottom-48 -left-40 h-[32rem] w-[32rem] rounded-full bg-indigo-200/15 blur-3xl" />
+        <div className="absolute inset-0" style={BLUEPRINT_GRID} />
+        <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-[#0b1b3a]/10 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 shadow-sm shadow-slate-200/20 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 shadow-sm shadow-[#0b1b3a]/5 backdrop-blur-xl">
+        <div className="h-1 w-full bg-amber-400" aria-hidden="true" />
         <Nav />
       </header>
 
-      <main className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-5 py-8 sm:px-8 lg:py-12">
+      <main
+        id="main-content"
+        className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-5 py-8 sm:px-8 lg:py-12"
+      >
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -98,10 +146,20 @@ export default function App() {
         </Routes>
       </main>
 
-      <footer className="relative z-10 border-t border-slate-200/80 bg-white/70">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-5 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <p className="font-medium text-slate-600">BuildBond</p>
-          <p>Milestone-based proof-of-work and payment tracking.</p>
+      <footer className="relative z-10 border-t border-white/10 bg-[#0b1b3a]">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <div className="flex items-center gap-3">
+            <span
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-400 text-sm font-extrabold text-[#0b1b3a]"
+              aria-hidden="true"
+            >
+              B
+            </span>
+            <p className="text-sm font-bold tracking-tight text-white">BuildBond</p>
+          </div>
+          <p className="text-sm text-slate-300">
+            Milestone-based proof-of-work and payment tracking.
+          </p>
         </div>
       </footer>
     </div>
