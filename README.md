@@ -139,7 +139,7 @@ The raiser must withdraw it before work resumes.
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, Vite 8, React Router 7, plain CSS |
+| Frontend | React 19, Vite 8, React Router 7, Tailwind CSS 4 |
 | Backend | Node.js 22, Express 5 |
 | Database | PostgreSQL 18 via Postgres.app |
 | Auth | JWT in an httpOnly cookie, bcryptjs (cost 10) |
@@ -321,6 +321,10 @@ npm run setup
 ```
 
 This runs `npm install` inside `server/` and `web/`.
+
+The web app is configured with Tailwind CSS through the Vite plugin. Add
+Tailwind utility classes directly to the React components; Tailwind scans the
+`web/` source tree automatically during development and production builds.
 
 ### 4. Configure the environment
 
