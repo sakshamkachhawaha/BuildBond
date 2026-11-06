@@ -8,15 +8,7 @@ import NewProject from './pages/NewProject.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
 import Register from './pages/Register.jsx';
 
-/*
-  Palette
-  navy      #0b1b3a  (brand, footer, 404 badge)
-  amber     #fbbf24  (accent, primary action, hazard stripe)
-  charcoal  #1f2933  (body text, hazard stripe)
-  canvas    #f4f5f7  (page background)
-*/
 
-// Blueprint grid shown faintly behind every page.
 const BLUEPRINT_GRID = {
   backgroundImage:
     'linear-gradient(to right, rgba(11,27,58,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(11,27,58,0.05) 1px, transparent 1px)',
@@ -25,7 +17,6 @@ const BLUEPRINT_GRID = {
   maskImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)',
 };
 
-// Safety-tape stripe used on the 404 card.
 const HAZARD_STRIPES = {
   backgroundImage:
     'repeating-linear-gradient(-45deg, #fbbf24, #fbbf24 14px, #1f2933 14px, #1f2933 28px)',
@@ -100,7 +91,7 @@ export default function App() {
 
       <main
         id="main-content"
-        className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-5 py-8 sm:px-8 lg:py-12"
+        className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-5 py-8 sm:px-8 lg:py-18"
       >
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -147,20 +138,6 @@ export default function App() {
       </main>
 
       <footer className="relative z-10 border-t border-white/10 bg-[#0b1b3a]">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <div className="flex items-center gap-3">
-            <span
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-400 text-sm font-extrabold text-[#0b1b3a]"
-              aria-hidden="true"
-            >
-              B
-            </span>
-            <p className="text-sm font-bold tracking-tight text-white">BuildBond</p>
-          </div>
-          <p className="text-sm text-slate-300">
-            Milestone-based proof-of-work and payment tracking.
-          </p>
-        </div>
       </footer>
     </div>
   );
