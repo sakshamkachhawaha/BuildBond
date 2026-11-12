@@ -1,9 +1,14 @@
-import '../src/config.js';
-import { pool } from '../src/db.js';
+import { readFileSync } from 'node:fs';
+import pg from 'pg';
+import { config } from '../src/config.js';
+
+const { Client } = pg;
+const schemaSql = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8');
+const client = new Client({ connectionString: config.databaseUrl });
 
 try {
-  await pool.query('DROP SCHEMA public CASCADE; CREATE SCHEMA public;');
+  await client.connect();
+  await client.query(schemaSql);
 } finally {
-  await pool.end();
+  await client.end().catch(() => {});
 }
-
