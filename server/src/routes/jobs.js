@@ -1,8 +1,4 @@
 import { Router } from 'express';
-
-export const jobsRouter = Router();
-
-import { Router } from 'express';
 import { requireAuth, requireRole } from '../auth.js';
 import { query } from '../db.js';
 
