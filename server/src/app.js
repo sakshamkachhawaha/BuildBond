@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { config } from './config.js';
@@ -44,6 +47,28 @@ app.use('/api/projects/:projectId/disputes', disputeRoutes);
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found.' });
 });
+
+// When the frontend has been built (npm run build:web), this process serves it
+// too, so the deployed app runs on one origin: the page and /api share a host,
+// which keeps the session cookie first-party and needs no CORS policy. During
+// development the built folder usually does not exist and vite serves the page.
+const webDist = process.env.WEB_DIST
+  ? path.resolve(process.env.WEB_DIST)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../web/dist');
+
+if (existsSync(path.join(webDist, 'index.html'))) {
+  app.use(express.static(webDist, { index: false }));
+
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      return next();
+    }
+
+    res.sendFile(path.join(webDist, 'index.html'));
+  });
+
+  console.log(`Serving the built frontend from ${webDist}`);
+}
 
 app.use((error, req, res, next) => {
 
