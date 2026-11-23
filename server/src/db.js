@@ -3,8 +3,18 @@ import { config } from './config.js';
 
 const { Pool } = pg;
 
+// Hosted PostgreSQL providers (Supabase, Heroku, Render) present a certificate
+// chain signed by their own CA, which node-postgres does not ship. The connection
+// is still TLS-encrypted; only CA verification is skipped. Local development has
+// no TLS at all, so sslmode is stripped and nothing is passed in.
+const parsedUrl = new URL(config.databaseUrl);
+const isLocalHost = ['localhost', '127.0.0.1', '::1'].includes(parsedUrl.hostname);
+const ssl = isLocalHost ? undefined : { rejectUnauthorized: false };
+parsedUrl.searchParams.delete('sslmode');
+
 export const pool = new Pool({
-  connectionString: config.databaseUrl,
+  connectionString: parsedUrl.toString(),
+  ssl,
   max: 10,
   idleTimeoutMillis: 30_000,
   connectionTimeoutMillis: 5_000,
