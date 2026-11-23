@@ -14,9 +14,14 @@ try {
   process.exit(1);
 }
 
-const server = app.listen(config.port, '127.0.0.1', () => {
-  console.log(`\nBuildBond API listening on http://127.0.0.1:${config.port}`);
-  console.log('Health check: http://127.0.0.1:' + config.port + '/api/health\n');
+// 127.0.0.1 is right for local development, but a hosted platform routes traffic
+// into the container from outside the loopback interface, so production binds
+// to every interface. HOST overrides both if a platform needs a specific one.
+const host = process.env.HOST || (config.isProduction ? '0.0.0.0' : '127.0.0.1');
+
+const server = app.listen(config.port, host, () => {
+  console.log(`\nBuildBond API listening on http://${host}:${config.port}`);
+  console.log('Health check: http://' + host + ':' + config.port + '/api/health\n');
 });
 
 let shuttingDown = false;
